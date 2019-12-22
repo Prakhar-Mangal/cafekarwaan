@@ -6,10 +6,14 @@ const itemSchema = mongoose.Schema({
         required : true,
         type : String
     },
-    category : 
-        {
+    price : {
+        require : true,
+        type : Number
+    },
+    category : {
             type : mongoose.Schema.Types.ObjectId,
-            ref : 'category'
+            ref : 'category',
+            require : true
         }
     
 })
