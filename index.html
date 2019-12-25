@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description"
+        content="Responsive sidebar template with sliding effect and dropdown menu based on bootstrap 3">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet"
+        id="bootstrap-css">
+        <!-- Font -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600" rel="stylesheet">
+        <link rel="stylesheet" href="fonts/beyond_the_mountains-webfont.css" type="text/css"/>
+
+        <!-- Stylesheets -->
+        <link href="plugin-frameworks/bootstrap.min.css" rel="stylesheet">
+        <link href="plugin-frameworks/swiper.css" rel="stylesheet">
+        <link href="fonts/ionicons.css" rel="stylesheet">
+        <link href="common/styles.css" rel="stylesheet">
+        <link rel="stylesheet" href="./style.css">
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script src="./index.js"></script>
+
+
+
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    
+
+    <script>
+        jQuery(function ($) {
+
+            $(".sidebar-dropdown > a").click(function () {
+                $(".sidebar-submenu").slideUp(200);
+                if (
+                    $(this)
+                        .parent()
+                        .hasClass("active")
+                ) {
+                    $(".sidebar-dropdown").removeClass("active");
+                    $(this)
+                        .parent()
+                        .removeClass("active");
+                } else {
+                    $(".sidebar-dropdown").removeClass("active");
+                    $(this)
+                        .next(".sidebar-submenu")
+                        .slideDown(200);
+                    $(this)
+                        .parent()
+                        .addClass("active");
+                }
+            });
+
+            $("#close-sidebar").click(function () {
+                $(".page-wrapper").removeClass("toggled");
+            });
+            $("#show-sidebar").click(function () {
+                $(".page-wrapper").addClass("toggled");
+            });
+
+
+
+
+        });
+    </script>
+</head>
+
+<body onload="showItems(1)">
+    <main class="page-content"></main>
+    <div class="page-wrapper chiller-theme toggled">
+        <a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
+            <i class="fas fa-bars"></i>
+        </a>
+        <nav id="sidebar" class="sidebar-wrapper">
+            <div class="sidebar-content">
+                <div class="sidebar-brand">
+                    <a href="#">Cafe Karwaan</a>
+                    <div id="close-sidebar">
+                        <i class="fas fa-times"></i>
+                    </div>
+                </div>
+                
+                <div class="sidebar-menu">
+                    <ul>
+                        <li class="header-menu">
+                            <span>General</span>
+                        </li>
+                       
+                        <li>
+                            <a href='javascript:;' onclick='generateOrder();'>
+                                <i class="fa fa-book"></i>
+                                <span>Create New Order</span>
+                                
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" data-toggle="modal" data-target="#exampleModal1">
+                                <i class="fa fa-trophy"></i>
+                                <span>Ongoing Orders</span>
+                                <span class="badge badge-pill badge-primary" id="orderValue">1</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-circle"></i>
+                                <span>Completed Orders</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa  fa-folder" aria-hidden="true"></i>
+                                <span>Total Progress</span>
+                            </a>
+                        </li>
+                        <!-- <li>
+                            <a href="#">
+                                <i class="fa fa-book"></i>
+                                <span>Joy Letter</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-folder"></i>
+                                <span>E-Jap</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-folder"></i>
+                                <span>Arti/Bhajans</span>
+                            </a>
+                        </li> -->
+                    </ul>
+                </div>
+                <!-- sidebar-menu  -->
+            </div>
+            <!-- sidebar-content  -->
+            <div class="sidebar-footer">
+                <a onclick="logout()" href="#">
+                    <i class="fa fa-power-off"></i>
+                </a>
+            </div>
+        </nav>
+       <button id="order" type="button" class="btn btn-primary">
+            Order no. <span class="badge badge-light" id="onumber">1</span>
+            <span class="sr-only">unread messages</span>
+          </button>
+        <button type="button" id="cart" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"> <i class="fa fa-shopping-cart"></i>  <span class="badge badge-pill badge-danger" id="cartValue">0</span></button>                                   
+        <!-- Cart Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title"  id="exampleModalLabel">Order no. <span id="onumber"> ..</span> </h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                        <table class="table table-striped">
+                                <thead>
+                                  <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Item</th>
+                                    <th scope="col">Price</th>
+                                    <th scope="col">Quantity</th>
+                                  </tr>
+                                </thead>
+                                <tbody id="cartItems">
+                                  
+                                </tbody>
+                              </table>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- cart model ends -->
+           <!-- Orders Modal -->
+           <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Orders List</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                        <table class="table table-striped">
+                                <thead>
+                                  <tr>
+                                    <th scope="col">Orderno.</th>
+                                    <th scope="col">Edit</th>
+                                    <th scope="col">Done</th>
+                                  </tr>
+                                </thead>
+                                <tbody id="orders">
+                                
+                                </tbody>
+                              </table>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" id="close" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- orders modal end -->
+            <div id="main" class="container-fluid">
+            <section class="bg-5 h-30x main-slider pos-relative">
+                    <div class="triangle-up pos-bottom"></div>
+                    <div class="container h-70">
+                        <img src="images/karwaan.jpeg" height="150px" width="200px">          
+                                        
+                            <div class="dplay-tbl">
+                                    
+                                    <div class="dplay-tbl-cell center-text color-white pt-10">
+                                            <h5><b>THE BEST IN TOWN</b></h5>
+                                            <h1 class="mt-30 mb-15">Menu</h1>
+                                    </div>
+                            </div>
+                    </div>
+            </section>
+            
+            <div class="accordion" id="accordionExample">
+                    <center><div class="loader"></div></center>
+                  </div>
+            
+            <footer class="pb-50  pt-70 pos-relative">
+                    <div class="pos-top triangle-bottom"></div>
+                    <div class="container-fluid">
+                            <a href="index.html"><img src="images/cafe.jpeg" alt="Logo"></a>
+            
+                    </div>
+            </footer>
+            </div>
+            
+
+        </main>
+        <!-- page-content" -->
+    </div>
+    <!-- page-wrapper -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+</body>
+
+</html>
