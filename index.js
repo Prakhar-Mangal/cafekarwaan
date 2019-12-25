@@ -90,13 +90,18 @@ orders = [{
     ono : 1,
     cart : []
 }]
-if(getStorage('orders')){
-    orders = getStorage('orders')    
-}
 
 tprice = 0;
 orderno = 2;
 order = [1]
+
+if(getStorage('orders')){
+    orders = getStorage('orders')
+    orderno = getStorage('orderno')
+    order = getStorage('order')     
+}
+
+
 Array.prototype.remove = function() {
     var what, a = arguments, L = a.length, ax;
     while (L && this.length) {
@@ -121,6 +126,8 @@ function generateOrder(){
     showCartItems(orderno)
     orderno++;
     setStorage('orders',orders)
+    setStorage('orderno',orderno)
+    setStorage('order',order)
 }
 
 
@@ -197,6 +204,8 @@ function add(id,ono){
         }
     })
     setStorage('orders',orders)
+    setStorage('orderno',orderno)
+    setStorage('order',order)
     
 }
 
@@ -218,6 +227,8 @@ function sub(id,ono){
         }
     })
     setStorage('orders',orders)
+    setStorage('orderno',orderno)
+    setStorage('order',order)
    
 }
 
@@ -236,6 +247,8 @@ function del(id,ono){
         }
     })
     setStorage('orders',orders)
+    setStorage('orderno',orderno)
+    setStorage('order',order)
 }
 
 function updateCartValue(ono){
@@ -287,6 +300,8 @@ function addToCart(id,name,price,ono){
     })
 
     setStorage('orders',orders)
+    setStorage('orderno',orderno)
+    setStorage('order',order)
     
 }
 
