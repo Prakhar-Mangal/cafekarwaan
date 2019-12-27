@@ -11,10 +11,26 @@ function compareStrings(a, b) {
   
     return (a < b) ? -1 : (a > b) ? 1 : 0;
   }
+  orders = [{
+    ono : 1,
+    cart : []
+}]
 
+tprice = 0;
+orderno = 2;
+order = [1]
 
-function showItems(ono){
+if(getStorage('orders')){
+    orders = getStorage('orders')
+    orderno = getStorage('orderno')
+    order = getStorage('order')     
+}
+
+function showItems(ono,n){
+    if(n != 2){
+        ono = order[0]
     
+    }
     axios.get('https://cafekarwaan.herokuapp.com/item/get')
     .then(res=>{
         document.getElementById('close-sidebar').click()
@@ -71,12 +87,13 @@ function showItems(ono){
     }
     }
     document.getElementById('accordionExample').innerHTML = str;
-
+    //document.getElementById('onumber').innerHTML = order[0]
 
     orders.map(o=>{
         if(o.ono == ono){
            
       document.getElementById('cartValue').innerHTML = o.cart.length
+      document.getElementById('orderValue').innerHTML = order.length
     showOrders()
     showCartItems(o.ono)
         }
@@ -86,20 +103,9 @@ function showItems(ono){
 }
 
 
-orders = [{
-    ono : 1,
-    cart : []
-}]
 
-tprice = 0;
-orderno = 2;
-order = [1]
 
-if(getStorage('orders')){
-    orders = getStorage('orders')
-    orderno = getStorage('orderno')
-    order = getStorage('order')     
-}
+
 
 
 Array.prototype.remove = function() {
@@ -150,8 +156,8 @@ function showOrders(){
     orders.map(o=>{
         str+=`<tr>
         <td>${o.ono}</td>
-        <td><button type="button" class="btn btn-success" onclick=editOrder(${o.ono}) data-dismiss="modal">Edit</button></td>
-        <td>Done
+        <td><button type="button" class="btn btn-success" onclick='editOrder(${o.ono})' data-dismiss="modal">Edit</button></td>
+        <td><button type="button" class="btn btn-success" onclick='doneOrder(${o.ono})' data-dismiss="modal">Done</button>
         </td>
         </tr>`
     })
@@ -160,7 +166,7 @@ function showOrders(){
 }
 
 function editOrder(ono){
-    showItems(ono)
+    showItems(ono,2)
     document.getElementById('close').click();
 }
 
@@ -305,11 +311,52 @@ function addToCart(id,name,price,ono){
     
 }
 
+function doneOrder(orderno){
+    var item 
+    orders.map(o=>{
+        if(o.ono == orderno){
+            item = o.cart
+            alert(o.ono)
+        }
+    })
+   
 
+    axios.post('https://cafekarwaan.herokuapp.com/order/save',{
+        orderno : orderno,
+        items : item
+    })
+    .then(res=>{
+        console.log(res)
+        delOrder(orderno)
 
+        
+    })
+    .catch(e=>{
+        console.log(e)
+    })
 
+}
 
-
+function delOrder(ono){
+    orders.map(o=>{
+        if(o.ono == ono){   
+                orders.remove(o)
+                order.remove(ono)
+                alert('order successfully saved')
+        }
+            })
+            showOrders(ono)
+            updateCartValue(ono)
+        
+        document.getElementById('orderValue').innerHTML = order.length
+    setStorage('orders',orders)
+    setStorage('orderno',orderno)
+    setStorage('order',order)
+    if(order.length == 0){
+        alert('last order')
+        generateOrder();
+    }
+}
 
 
 
