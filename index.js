@@ -319,7 +319,10 @@ function doneOrder(orderno){
             alert(o.ono)
         }
     })
-   
+   str = JSON.stringify(item);
+   str = str.replace(/\"id\":/g, "\"item\":");
+   item = JSON.parse(str);
+	console.log(item)
 
     axios.post('https://cafekarwaan.herokuapp.com/order/save',{
         orderno : orderno,
