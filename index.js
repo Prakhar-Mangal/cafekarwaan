@@ -128,7 +128,7 @@ function generateOrder(){
     })
     console.log(order)
     document.getElementById('orderValue').innerHTML = order.length
-    showItems(orderno)
+    showItems(orderno,2)
     showCartItems(orderno)
     orderno++;
     setStorage('orders',orders)
