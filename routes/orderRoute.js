@@ -20,3 +20,22 @@ app.post('/save',(req,res)=>{
         }
     })();
 })
+
+app.get('/get',(req,res)=>{
+    (async()=>{
+        try{
+            orderPromise = await orderServices.getOrder(req.body)
+            res.json({
+                success : true,
+                data : orderPromise
+            })
+        }
+        catch(e){
+            console.log(e)
+            res.json({
+                success : false
+            })
+
+        }
+    })()
+})

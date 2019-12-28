@@ -6,9 +6,9 @@ const saveOrder = function(obj){
     return order.save()
 }
 
-// const getItem = function(params){
-//     console.log(params)
-//     return itemSchema.find().populate('category').exec()
-// }
+const getOrder = function(params){
+    console.log(params)
+    return orderSchema.find().populate('items.item').exec()
+}
 
-module.exports = {saveOrder}
+module.exports = {saveOrder, getOrder}

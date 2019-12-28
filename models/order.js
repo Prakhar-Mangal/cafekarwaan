@@ -11,14 +11,15 @@ const orderSchema = mongoose.Schema({
             item : {
                 type : mongoose.Schema.Types.ObjectId,
                 ref : 'item',
-                required : false
+                required : true
             },
             quantity : {
                 type : Number,
-                required : false
+                required : true
             }
         }
-    ]
+    ],
+   time : { type : Date, default: Date.now }
     
 })
 
