@@ -248,7 +248,7 @@ function del(id,ono){
 
                 }
             })
-            showItems(order[0])
+            showCartItems(ono)
             updateCartValue(ono)
         }
     })
@@ -345,8 +345,8 @@ function delOrder(ono){
                 alert('order successfully saved')
         }
             })
-            showOrders(ono)
-            updateCartValue(ono)
+           // showOrders(ono)
+           // updateCartValue(ono)
         
         document.getElementById('orderValue').innerHTML = order.length
     setStorage('orders',orders)
@@ -355,7 +355,11 @@ function delOrder(ono){
     if(order.length == 0){
         alert('last order')
         generateOrder();
-    }
+    }else{
+	showItems(order[0]);
+}
+
+
 }
 
 
