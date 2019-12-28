@@ -248,7 +248,7 @@ function del(id,ono){
 
                 }
             })
-            showCartItems(ono)
+            showItems(order[0])
             updateCartValue(ono)
         }
     })
