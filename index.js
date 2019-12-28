@@ -345,8 +345,8 @@ function delOrder(ono){
                 alert('order successfully saved')
         }
             })
-           // showOrders(ono)
-           // updateCartValue(ono)
+           showOrders(ono)
+           updateCartValue(ono)
         
         document.getElementById('orderValue').innerHTML = order.length
     setStorage('orders',orders)
