@@ -187,12 +187,14 @@ function showCartItems(ono){
         str += `<tr>
         <td></td>
         <td><b>Total: </b></td>
-        <td id="tprice">...</td>
+        <td id="tprice" style="red">...</td>
         <td></td>
     </tr>`
+    
         document.getElementById('cartItems').innerHTML = str
         document.getElementById('tprice').innerHTML = tprice
         document.getElementById('onumber').innerHTML = ono
+        document.getElementById('doneButton').innerHTML = `<button type="button" class="btn btn-success" onclick='doneOrder(${ono})' data-dismiss="modal">Done Order</button>`
         }
         
     })
