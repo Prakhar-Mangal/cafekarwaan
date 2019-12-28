@@ -119,7 +119,8 @@ Array.prototype.remove = function() {
     return this;
 };
 
-function generateOrder(){
+function generateOrder(n){
+    if(n!=1)
     alert('New Order created Successfully, Add items now 👯‍♀🕺😁')
     order.push(orderno)
     orders.push({
@@ -316,7 +317,7 @@ function doneOrder(orderno){
     orders.map(o=>{
         if(o.ono == orderno){
             item = o.cart
-            alert(o.ono)
+           // alert(o.ono)
         }
     })
    str = JSON.stringify(item);
@@ -356,8 +357,8 @@ function delOrder(ono){
     setStorage('orderno',orderno)
     setStorage('order',order)
     if(order.length == 0){
-        alert('last order')
-        generateOrder();
+       // alert('last order')
+        generateOrder(1);
     }else{
 	showItems(order[0]);
 }
